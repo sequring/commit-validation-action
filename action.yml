@@ -24,6 +24,7 @@ runs:
       working-directory: "${{ github.action_path }}"
     - name: Output check
       run: echo "${{ steps.check-commit.outputs.check }}"
+      shell: bash
 branding:
   icon: "terminal"
   color: "red"
