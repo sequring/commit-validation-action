@@ -1,7 +1,5 @@
 # action.yaml
-name: "Custom Github Action"
-
-name: "Terraform TFLint Action"
+name: "PGP Commit Validation Action"
 description: "Scan last commit for sign"
 author: "Valentyn Nastenko"
 
