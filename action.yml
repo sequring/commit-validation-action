@@ -4,8 +4,22 @@ description: "Scan last commit for sign"
 author: "Valentyn Nastenko"
 
 runs:
-  using: "docker"
-  image: "./Dockerfile"
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+    - name: Check sign
+      id: check-commit
+      run: python src/check_commit.py
+      shell: bash
 branding:
   icon: "terminal"
   color: "red"
