@@ -22,6 +22,8 @@ runs:
       run: python src/check_commit.py
       shell: bash
       working-directory: "${{ github.action_path }}"
+    - name: Output check
+      run: echo "${{ steps.check-commit.outputs.check }}"
 branding:
   icon: "terminal"
   color: "red"

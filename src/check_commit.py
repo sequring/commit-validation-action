@@ -35,7 +35,7 @@ def get_key_by_id(key_id):
             response.raise_for_status()
             return response.text
         except requests.exceptions.HTTPError as e:
-            print("RSA key not found in ", KEYS_SERVER_URL)
+            print(f"::set-output name=commit::RSA key not found in ", KEYS_SERVER_URL)
             os._exit(1)
 
 
@@ -58,10 +58,11 @@ def get_pgp_key_id():
         if match.group(1) == "RSA":
             return match.group(2)
         else:
+            print(f"::set-output name=commit::You should use RSA key")
             print("You should use RSA key")
             os._exit(1)
     else:
-        print("Commit isn't signing")
+        print(f"::set-output name=commit::Commit isn't signing")
         os._exit(1)
 
 
@@ -75,10 +76,9 @@ if is_git_repo():
         print(key_id)
         print(key_validation)
     if hashlib.sha1(key.encode("utf-8")).hexdigest() != hashlib.sha1(key_validation.encode("utf-8")).hexdigest():
-        print("Commit isn't validation by ", KEYS_SERVER_URL)
+        print(f"::set-output name=commit::Commit isn't validation by ", KEYS_SERVER_URL)
         os._exit(1)
-
     os._exit(0)
 else:
-    print("Current directory is not a git repository")
+    print(f"::set-output name=commit::Current directory is not a git repository")
     os._exit(1)
