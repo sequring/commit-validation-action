@@ -16,10 +16,12 @@ runs:
     - name: Install Dependencies
       run: pip install -r requirements.txt
       shell: bash
+      working-directory: "${{ github.action_path }}"
     - name: Check sign
       id: check-commit
       run: python src/check_commit.py
       shell: bash
+      working-directory: "${{ github.action_path }}"
 branding:
   icon: "terminal"
   color: "red"
