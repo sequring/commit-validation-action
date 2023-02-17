@@ -1,0 +1,17 @@
+# action.yaml
+name: "Custom Github Action"
+description: "A Github Action that takes latest commit and check pgp sign"
+runs:
+  using: "composite"
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+    - name: Check sign
+      id: check-commit
+      run: python src/check_validation.py
+      shell: bash

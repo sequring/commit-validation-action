@@ -4,8 +4,10 @@ import requests
 import subprocess
 import os
 import re
+import hashlib
 
 KEYS_SERVER_URL = "https://keys.openpgp.org/"
+DEBUG = True
 
 
 def is_git_repo():
@@ -67,10 +69,15 @@ if is_git_repo():
     email = get_last_commit_email()
     key = get_key_by_email(email)
     key_id = get_pgp_key_id()
-    key_answer = get_key_by_id(key_id)
-    print(key)
-    print(key_id)
-    print(key_answer)
+    key_validation = get_key_by_id(key_id)
+    if DEBUG:
+        print(key)
+        print(key_id)
+        print(key_answer)
+    if hashlib.sha1(key).hexdigest() != hashlib.sha1(key_validation).hexdigest():
+        print("Commit isn't validation by ", KEYS_SERVER_URL)
+        os._exit(1)
+
     os._exit(0)
 else:
     print("Current directory is not a git repository")
