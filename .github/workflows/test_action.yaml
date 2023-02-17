@@ -10,4 +10,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: check-commit
-        uses: sequring/commit-validation-action
+        uses: ./
