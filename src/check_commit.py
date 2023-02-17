@@ -74,7 +74,7 @@ if is_git_repo():
         print(key)
         print(key_id)
         print(key_validation)
-    if hashlib.sha1(key).hexdigest() != hashlib.sha1(key_validation).hexdigest():
+    if hashlib.sha1(key.encode("utf-8")).hexdigest() != hashlib.sha1(key_validation.encode("utf-8")).hexdigest():
         print("Commit isn't validation by ", KEYS_SERVER_URL)
         os._exit(1)
 
