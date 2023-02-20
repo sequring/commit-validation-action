@@ -2,7 +2,10 @@
 name: "PGP Commit Validation Action"
 description: "Scan last commit for sign"
 author: "Valentyn Nastenko"
-
+outputs:
+  check:
+    description: commit check output
+    value: ${{ steps.check-commit.outputs.check }}
 runs:
   using: "composite"
   steps:
