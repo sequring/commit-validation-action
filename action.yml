@@ -5,7 +5,7 @@ author: "Valentyn Nastenko"
 outputs:
   check:
     description: commit check output
-    value: ${{ steps.check-commit.outputs.check }}
+    value: ${{ steps.check-commit.outputs.commit }}
 runs:
   using: "composite"
   steps:
@@ -26,7 +26,7 @@ runs:
       shell: bash
       working-directory: ""
     - name: Output check
-      run: echo "${{ steps.check-commit.outputs.check }}"
+      run: echo "${{ steps.check-commit.outputs.commit }}"
       shell: bash
 branding:
   icon: "terminal"
