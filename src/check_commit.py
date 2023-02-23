@@ -79,10 +79,11 @@ if is_git_repo():
         print(key_id)
         print(key_validation)
     if hashlib.sha1(key.encode("utf-8")).hexdigest() != hashlib.sha1(key_validation.encode("utf-8")).hexdigest():
-
         commit_output = "Commit isn't validation by " + KEYS_SERVER_URL
         print(f"::set-output name=commit::{commit_output}")
         os._exit(1)
+    commit_output = "Your commit is valid"
+    print(f"::set-output name=commit::{commit_output}")
     os._exit(0)
 else:
     commit_output = "Current directory is not a git repository}"
