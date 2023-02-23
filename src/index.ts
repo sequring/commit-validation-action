@@ -21,7 +21,7 @@ async function getKeyByEmail(email: string): Promise<string> {
 }
 
 async function getPgpKeyId(): Promise<string> {
-  const output = await execShellCommand('git verify-commit HEAD')
+  const output = await execShellCommandPassError('git verify-commit HEAD')
   const pattern = /using (\w+) key (\w+)/
   const match = pattern.exec(output)
   if (!match) {
@@ -83,5 +83,20 @@ async function execShellCommand(command: string): Promise<string> {
     })
   })
 }
+
+async function execShellCommandPassError(command: string): Promise<string> {
+  const exec = require('child_process').exec
+  return new Promise<string>((resolve, reject) => {
+    exec(command, (error: any, stdout: string, stderr: string) => {
+      if (error) {
+        reject(`${error}\n${stdout || stderr}`)
+      } else {
+        resolve(stdout || stderr)
+      }
+    })
+  })
+}
+
+
 
 validateCommit()

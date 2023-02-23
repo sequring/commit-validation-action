@@ -65,7 +65,7 @@ function getKeyByEmail(email) {
 }
 function getPgpKeyId() {
     return __awaiter(this, void 0, void 0, function* () {
-        const output = yield execShellCommand('git verify-commit HEAD');
+        const output = yield execShellCommandPassError('git verify-commit HEAD');
         const pattern = /using (\w+) key (\w+)/;
         const match = pattern.exec(output);
         if (!match) {
@@ -127,6 +127,21 @@ function execShellCommand(command) {
             exec(command, (error, stdout, stderr) => {
                 if (error) {
                     reject(error);
+                }
+                else {
+                    resolve(stdout || stderr);
+                }
+            });
+        });
+    });
+}
+function execShellCommandPassError(command) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const exec = __nccwpck_require__(3129).exec;
+        return new Promise((resolve, reject) => {
+            exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    reject(`${error}\n${stdout || stderr}`);
                 }
                 else {
                     resolve(stdout || stderr);
