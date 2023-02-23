@@ -112,7 +112,7 @@ function validateCommit() {
             core.setOutput('commit', 'Your commit is valid');
         }
         catch (error) {
-            core.setFailed("Your commit isn't valid");
+            core.setFailed("error: " + error);
         }
     });
 }
