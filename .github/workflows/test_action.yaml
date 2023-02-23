@@ -1,15 +1,17 @@
-# .github/workflows/test_action.yaml
 name: Test Action
-on: [push]
+on:
+  push:
+    branches:
+      - release
 
 jobs:
   check-validation:
     runs-on: ubuntu-latest
-    name: Check commit signin
+    name: Check commit signing
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: check-commit
+      - name: Check commit
         uses: ./
         id: check-commit
       - name: Show check-commit
