@@ -1,30 +1,12 @@
-# action.yaml
-name: "PGP Commit Validation Action"
-description: "Scan last commit for sign"
-author: "Valentyn Nastenko"
-inputs: {}
-outputs:
-  commit:
-    description: commit check output
-    value: ${{ steps.check-commit.outputs.commit }}
+name: Validate Commit
+description: Validates a commit with the OpenPGP keys server
+author: Your Name
+inputs:
+  debug:
+    description: "Whether to enable debug logging"
+    required: false
+    default: "true"
 runs:
-  using: "composite"
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
-        fetch-depth: 0
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-    - name: Install Dependencies
-      run: pip install -r requirements.txt
-      shell: bash
-      working-directory: "${{ github.action_path }}"
-    - name: Check sign
-      id: check-commit
-      run: python ${{ github.action_path }}/src/check_commit.py
-      shell: bash
-branding:
-  icon: "terminal"
-  color: "red"
+  using: "node16"
+  main: "dist/index.js"
+  pre: "npm install"
