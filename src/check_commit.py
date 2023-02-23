@@ -5,6 +5,7 @@ import subprocess
 import os
 import re
 import hashlib
+import logging
 
 KEYS_SERVER_URL = "https://keys.openpgp.org/"
 DEBUG = True
@@ -35,7 +36,8 @@ def get_key_by_id(key_id):
             response.raise_for_status()
             return response.text
         except requests.exceptions.HTTPError as e:
-            print(f"::set-output name=commit::RSA key not found in ", KEYS_SERVER_URL)
+            commit_output = "RSA key not found in " + KEYS_SERVER_URL
+            print(f"::set-output name=commit::{commit_output}")
             os._exit(1)
 
 
@@ -58,11 +60,12 @@ def get_pgp_key_id():
         if match.group(1) == "RSA":
             return match.group(2)
         else:
-            print(f"::set-output name=commit::You should use RSA key")
-            print("You should use RSA key")
+            commit_output = "You should use RSA key"
+            print(f"::set-output name=commit::{commit_output}")
             os._exit(1)
     else:
-        print(f"::set-output name=commit::Commit isn't signing")
+        commit_output = "Commit isn't signing"
+        print(f"::set-output name=commit::{commit_output}")
         os._exit(1)
 
 
@@ -76,9 +79,12 @@ if is_git_repo():
         print(key_id)
         print(key_validation)
     if hashlib.sha1(key.encode("utf-8")).hexdigest() != hashlib.sha1(key_validation.encode("utf-8")).hexdigest():
-        print(f"::set-output name=commit::Commit isn't validation by ", KEYS_SERVER_URL)
+
+        commit_output = "Commit isn't validation by " + KEYS_SERVER_URL
+        print(f"::set-output name=commit::{commit_output}")
         os._exit(1)
     os._exit(0)
 else:
-    print(f"::set-output name=commit::Current directory is not a git repository")
+    commit_output = "Current directory is not a git repository}"
+    print(f"::set-output name=commit::{commit_output}")
     os._exit(1)
