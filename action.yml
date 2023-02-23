@@ -5,7 +5,7 @@ inputs:
   debug:
     description: "Whether to enable debug logging"
     required: false
-    default: "false"
+    default: "true"
 runs:
   using: "node12"
   main: "dist/index.js"
