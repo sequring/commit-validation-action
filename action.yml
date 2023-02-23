@@ -1,34 +1,34 @@
 # action.yaml
-name: "PGP Commit Validation Workflow"
+name: "PGP Commit Validation Action"
+description: "Scan last commit for sign"
+author: "Valentyn Nastenko"
+outputs:
+  check:
+    description: commit check output
+    value: ${{ steps.check-commit.outputs.commit }}
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  check_commit:
-    name: "Check Commit"
-    runs-on: ubuntu-latest
-    using: "composite"
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-        working-directory: ${{ github.action_path }}
-      - name: Check sign
-        id: check-commit
-        run: python ${{ github.action_path }}/src/check_commit.py
-        working-directory: ${{ github.action_path }}
-      - name: Output check
-        run: echo "${{ steps.check-commit.outputs.commit }}"
-
-  other_job:
-    name: "Other Job"
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "This is another job"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+      working-directory: "${{ github.action_path }}"
+    - name: Check sign
+      id: check-commit
+      run: python ${{ github.action_path }}/src/check_commit.py
+      shell: bash
+      working-directory: ""
+    - name: Output check
+      run: echo "${{ steps.check-commit.outputs.commit }}"
+      shell: bash
+branding:
+  icon: "terminal"
+  color: "red"
