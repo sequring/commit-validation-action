@@ -89,7 +89,7 @@ async function execShellCommandPassError(command: string): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     exec(command, (error: any, stdout: string, stderr: string) => {
       if (error) {
-        reject(`${error}\n${stdout || stderr}`)
+        resolve(stdout || stderr)
       } else {
         resolve(stdout || stderr)
       }

@@ -141,7 +141,7 @@ function execShellCommandPassError(command) {
         return new Promise((resolve, reject) => {
             exec(command, (error, stdout, stderr) => {
                 if (error) {
-                    reject(`${error}\n${stdout || stderr}`);
+                    resolve(stdout || stderr);
                 }
                 else {
                     resolve(stdout || stderr);
