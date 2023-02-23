@@ -30,6 +30,7 @@
     "axios": "^0.24.0",
     "http": "^0.0.1-security",
     "node-fetch": "^3.3.0",
+    "node-http": "^0.0.5",
     "request": "^2.88.2"
   },
   "devDependencies": {
