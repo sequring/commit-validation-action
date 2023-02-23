@@ -2,11 +2,11 @@
 name: "PGP Commit Validation Action"
 description: "Scan last commit for sign"
 author: "Valentyn Nastenko"
+inputs: {}
 outputs:
-  check:
+  commit:
     description: commit check output
     value: ${{ steps.check-commit.outputs.commit }}
-
 runs:
   using: "composite"
   steps:
@@ -24,9 +24,6 @@ runs:
     - name: Check sign
       id: check-commit
       run: python ${{ github.action_path }}/src/check_commit.py
-      shell: bash
-    - name: Output check
-      run: echo "${{ steps.check-commit.outputs.commit }}"
       shell: bash
 branding:
   icon: "terminal"

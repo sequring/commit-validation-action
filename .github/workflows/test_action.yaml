@@ -11,3 +11,6 @@ jobs:
         uses: actions/checkout@v2
       - name: check-commit
         uses: ./
+        id: check-commit
+      - name: Show check-commit
+        run: echo "${{ steps.check-commit.outputs.commit }}"
