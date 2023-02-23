@@ -2,7 +2,7 @@ name: Test Action
 on:
   push:
     branches:
-      - release
+      - main
 
 jobs:
   check-validation:
