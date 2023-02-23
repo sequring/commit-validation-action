@@ -10,6 +10,7 @@ jobs:
   check_commit:
     name: "Check Commit"
     runs-on: ubuntu-latest
+    using: "composite"
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
