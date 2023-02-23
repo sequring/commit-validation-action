@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as crypto from 'crypto'
+import fetch from 'node-fetch'
 
 const KEYS_SERVER_URL = 'https://keys.openpgp.org/'
 const DEBUG = true
