@@ -84,7 +84,6 @@ if is_git_repo():
         os._exit(1)
     commit_output = "Your commit is valid"
     print(f"::set-output name=commit::{commit_output}")
-    os._exit(0)
 else:
     commit_output = "Current directory is not a git repository}"
     print(f"::set-output name=commit::{commit_output}")
