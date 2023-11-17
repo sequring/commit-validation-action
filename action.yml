@@ -3,10 +3,17 @@ description: Validates a commit with the OpenPGP keys server
 author: Your Name
 inputs:
   debug:
-    description: "Whether to enable debug logging"
+    description: 'Whether to enable debug logging'
     required: false
-    default: "true"
+    default: 'true'
+  use_config:
+    description: 'use config file'
+    required: false
+    default: 'false'
+  config_file:
+    description: 'path and name config file'
+    required: false
+    default: '.commit_validation.json'
 runs:
-  using: "node16"
-  main: "dist/index.js"
-  pre: "npm install"
+  using: 'node16'
+  main: 'dist/index.js'
